@@ -1,0 +1,4 @@
+--require spec_helper
+--format documentation
+# 出力結果を色分けする
+--color
