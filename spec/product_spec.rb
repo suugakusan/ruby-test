@@ -17,9 +17,15 @@ RSpec.describe Product do
       end
 
       it "商品の@nameが，product_paramsの名前と等しいこと" do
+        product_params = { name: "トマト", price: 100 }
+        product = Product.new(product_params)
+        expect(product.name).to eq "トマト"
       end
 
       it "商品の@priceが，product_paramsの金額と等しいこと" do
+        product_params = { name: "トマト", price: 100 }
+        product = Product.new(product_params)
+        expect(product.price).to eq 100
       end
     end
   end
