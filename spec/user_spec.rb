@@ -30,27 +30,24 @@ RSpec.describe User do
     
     # ▼単体テスト5 異常系(choose_productメソッド)
     let(:prompt_re_enter_msg) { /#{products.first.id}から#{products.last.id}の番号から選んでください。/ }
-
-    context "商品一覧の最初のidより１小さい数値を入力したとき" do
-      let(:wrong_product_id_input) { "#{products.first.id - 1}\n" }
-      it "再入力を促すこと" do
+    shared_examples "再入力を促すこと" do
+      it do
         allow(ARGF).to receive(:gets).and_return wrong_product_id_input, correct_product_id_input
         expect { user.choose_product(products) }.to output(prompt_re_enter_msg).to_stdout
       end
+    end
+    
+    context "商品一覧の最初のidより１小さい数値を入力したとき" do
+      let(:wrong_product_id_input) { "#{products.first.id - 1}\n" }
+      it_behaves_like "再入力を促すこと"
     end
     context "商品一覧の最後のidより１大きい数値を入力したとき" do
       let(:wrong_product_id_input) { "#{products.last.id + 1}\n" }
-      it "再入力を促すこと" do
-        allow(ARGF).to receive(:gets).and_return wrong_product_id_input, correct_product_id_input
-        expect { user.choose_product(products) }.to output(prompt_re_enter_msg).to_stdout
-      end
+      it_behaves_like "再入力を促すこと"
     end
     context "数値以外の文字列を入力したとき" do
       let(:wrong_product_id_input) { "hoge\n" }
-      it "再入力を促すこと" do
-        allow(ARGF).to receive(:gets).and_return wrong_product_id_input, correct_product_id_input
-        expect { user.choose_product(products) }.to output(prompt_re_enter_msg).to_stdout
-      end
+      it_behaves_like "再入力を促すこと"
     end
   end
 end
