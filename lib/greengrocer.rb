@@ -36,4 +36,5 @@ class Greengrocer
     puts "合計金額は#{total_price.floor}円です。"
     puts "お買い上げありがとうございました！"
   end
+ 
 end
